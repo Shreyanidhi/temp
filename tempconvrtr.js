@@ -1,34 +1,45 @@
-const celsiusField=document.querySelector("celsius");
-const degree=document.querySelector("degree");
-const convertBtn=document.querySelector("convert-btn");
-const tempType=document.querySelector("temp-type");
+const celsiusField = document.querySelector("#celsius");
+const degree = document.querySelector("#degree");
+const convertBtn = document.querySelector("#convert-btn");
+const tempType = document.querySelector("#temp-type");
 
 
-window.addEventListener("load",()=>{
-    degree.value="";
-celsiusField.innerHTML="";}
+window.addEventListener("load", () => {
+    degree.value = "";
+    celsiusField.innerHTML = "";
+}
 )
-convertBtn.addEventListener("click",(e)=>{
+
+if (degree.value === "") {
+    convertBtn.setAttribute("disabled", "");
+    setTimeout(() => {
+        convertBtn.removeAttribute('disabled');
+    }, 4000);
+    console.log("Button is disabled for 4 seconds");
+}
+
+convertBtn.addEventListener("click", (e) => {
     e.preventDefault();
     convertToCelsius();
-// convertBtn.innerHTML="<i class="fa-solid fa-circle-notch"></i>"
-})
+    convertBtn.innerHTML = "<span class='icon'><i class='fa fa-spinner fa-spin'></i> Converting...</span>";
+    setTimeout(() => {
+        convertBtn.innerHTML = "<span>Convert</span>"
+    }, 1000);
+    console.log("Button is disabled for 1 second");
+});
+
 function convertToCelsius() {
     let inputValue = degree.value;
 
-    // setTimeout(()=>{
-        // convertBtn.innerHTML="<span>convert</span>";
-
-    // },1000)
-    if(tempType.value === "fahrenheit"){
-        const fahrenheitToCelsius=(inputValue -32)*(5/9);
-    celsiusField.innerHTML=`${fahrenheitToCelsius.toFixed(3)} &deg;
-    c`;}
-    // else if(tempType.value === "kelvin") {
-    //  const kelvinitToCelsius= inputValue -273.15;
-    // celsiusField.innerHTML=`${kelvinitToCelsius.toFixed(3)} &deg;
-    // c`;
-    //  }
-
-
+    setTimeout(() => {
+        if (tempType.value === "fahrenheit") {
+            const FahrenheitToCelsius = (inputValue - 32) * (5 / 9);
+            celsiusField.innerHTML = `${FahrenheitToCelsius.toFixed(3)} &deg;c`;
+        } else if (tempType.value === "kelvin") {
+            const KelvinToCelsius = inputValue - 273.15;
+            celsiusField.innerHTML = `${KelvinToCelsius.toFixed(3)} &deg;c`;
         }
+    }, 1200)
+
+    console.log("Conversion is taking place...");
+}
